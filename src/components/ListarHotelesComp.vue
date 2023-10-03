@@ -1,12 +1,3 @@
-<script setup>
-import { onMounted } from 'vue'
-import { initFlowbite } from 'flowbite'
-
-// initialize components based on data attribute selectors
-onMounted(() => {
-  initFlowbite()
-})
-</script>
 <template>
  <div class="mt-9 p-10">
   <div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
