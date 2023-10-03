@@ -1,100 +1,117 @@
 <template>
-    <div class="mt-9 p-10">
-      <div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left text-blue-100 dark:text-blue-100">
-          <thead class="text-xs text-white uppercase bg-blue-600 dark:text-white">
-            <tr>
-              <th scope="col" class="px-6 py-3">
-                Número
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Tipo
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Precio
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Disponibilidad
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Acción
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="bg-blue-500 border-b border-blue-400">
-              <td class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100">
-                101
-              </td>
-              <td class="px-6 py-4">
-                Individual
-              </td>
-              <td class="px-6 py-4">
-                $100
-              </td>
-              <td class="px-6 py-4">
-                Disponible
-              </td>
-              <td class="px-6 py-4">
-            <a href="/detalle-habitaciones" class="font-medium text-white hover:underline">
-              <i class="fas fa-eye"></i>               
-              <font-awesome-icon icon="fa-solid fa-eye" />
-            </a>
-            <a href="/edit-habitacion" class="font-medium text-white hover:underline ml-2">
-              <i class="fas fa-edit"></i> 
-              <font-awesome-icon icon="fa-solid fa-pen-to-square" />
-            </a>
-            <a @click="showAlert" class="font-medium text-white hover:underline ml-2">
-              <i class="fas fa-trash"></i> <!-- Icono de basura para "Eliminar" -->
-              <font-awesome-icon icon="fa-solid fa-trash" />
-            </a>
-          </td>
-            </tr>
-            <tr class="bg-blue-500 border-b border-blue-400">
-              <td class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100">
-                102
-              </td>
-              <td class="px-6 py-4">
-                Doble
-              </td>
-              <td class="px-6 py-4">
-                $150
-              </td>
-              <td class="px-6 py-4">
-                Disponible
-              </td>
-              <td class="px-6 py-4">
-            <a href="/detalle-habitaciones" class="font-medium text-white hover:underline">
-              <i class="fas fa-eye"></i>               
-              <font-awesome-icon icon="fa-solid fa-eye" />
-            </a>
-            <a href="/edit-habitacion" class="font-medium text-white hover:underline ml-2">
-              <i class="fas fa-edit"></i> 
-              <font-awesome-icon icon="fa-solid fa-pen-to-square" />
-            </a>
-            <a @click="showAlert" class="font-medium text-white hover:underline ml-2">
-              <i class="fas fa-trash"></i> <!-- Icono de basura para "Eliminar" -->
-              <font-awesome-icon icon="fa-solid fa-trash" />
-            </a>
-          </td>
-            </tr>
-            <!-- Puedes agregar más filas con datos aquí -->
-          </tbody>
-        </table>
-        <a href="/crear"><button  type="button"  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 m-4 p-4">Crear Habitacion</button></a>
+  <div class="mt-9 p-10">
+    <div class="flex flex-col justify-center">
+      <!-- Table -->
+      <div class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+        <header class="px-5 py-4 border-b border-gray-100">
+          <h2 class="font-semibold text-gray-800">Habitaciones</h2>
+        </header>
+        <div class="p-3">
+          <div class="overflow-x-auto">
+            <table class="table-auto w-full">
+              <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                <tr>
+                  <th class="p-2 whitespace-nowrap">
+                    <div class="font-semibold text-left">Hotel</div>
+                  </th><th class="p-2 whitespace-nowrap">
+                    <div class="font-semibold text-left"># Habitaciones</div>
+                  </th>
+                  <th class="p-2 whitespace-nowrap">
+                    <div class="font-semibold text-left">Número</div>
+                  </th>
+                  <th class="p-2 whitespace-nowrap">
+                    <div class="font-semibold text-left">Tipo</div>
+                  </th>
+                  <th class="p-2 whitespace-nowrap">
+                    <div class="font-semibold text-left">Precio</div>
+                  </th>
+                  <th class="p-2 whitespace-nowrap">
+                    <div class="font-semibold text-left">Disponibilidad</div>
+                  </th>
+                  <th class="p-2 whitespace-nowrap">
+                    <div class="font-semibold text-center">Acción</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="text-sm divide-y divide-gray-100">
+                <tr>
+                  <td class="p-2 whitespace-nowrap">
+                    <div class="font-medium text-gray-800">Guadalupe</div>
+                  </td><td class="p-2 whitespace-nowrap">
+                    <div class="font-medium text-gray-800">200</div>
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    <div class="font-medium text-gray-800">101</div>
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    Individual
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    $100
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    <span class="text-green-500">Disponible</span>
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    <a href="/detalle-habitaciones" class="font-medium text-blue-600 hover:underline">
+                     <font-awesome-icon icon="fa-solid fa-eye" />
+                    </a>
+                    <a href="/edit-habitacion" class="font-medium text-blue-600 hover:underline ml-2">
+                      <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+                    </a>
+                    <a @click="showAlert" class="font-medium text-red-600 hover:underline ml-2">
+                      <font-awesome-icon icon="fa-solid fa-trash" />
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="p-2 whitespace-nowrap">
+                    <div class="font-medium text-gray-800">Guadalupe</div>
+                  </td><td class="p-2 whitespace-nowrap">
+                    <div class="font-medium text-gray-800">200</div>
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    <div class="font-medium text-gray-800">102</div>
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    Doble
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    $150
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    <span class="text-red-500">No Disponible</span>
+                  </td>
+                  <td class="p-2 whitespace-nowrap">
+                    <a href="/detalle-habitaciones" class="font-medium text-blue-600 hover:underline">
+                     <font-awesome-icon icon="fa-solid fa-eye" />
+                    </a>
+                    <a href="/edit-habitacion" class="font-medium text-blue-600 hover:underline ml-2">
+                      <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+                    </a>
+                    <a @click="showAlert" class="font-medium text-red-600 hover:underline ml-2">
+                      <font-awesome-icon icon="fa-solid fa-trash" />
+                    </a>
+                  </td>
+                </tr>
+                <!-- Puedes agregar más filas con datos aquí -->
+              </tbody>
+            </table>
+            <a href="/crear"><button  type="button"  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 m-4 p-4">Crear Habitacion</button></a>
+          </div>
+        </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-  name:'SweetAlert2',
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'SweetAlert2',
   methods: {
-    
     showAlert() {
-    
-    this.$swal('Desea eliminar esta Habitacion?');
+      this.$swal('¿Desea eliminar esta Habitación?');
+    },
   },
-  }
-}
+};
 </script>
