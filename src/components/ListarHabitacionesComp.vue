@@ -109,7 +109,19 @@ export default {
   name: 'SweetAlert2',
   methods: {
     showAlert() {
-      this.$swal('¿Desea eliminar esta Habitación?');
+      this.$swal({title: 'Cuidado!!',
+      text: "¿Desea eliminar esta Habitacion?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+          if(result.value) {
+            this.$swal('Enhorabuena', 'Eliminado con exito', 'success')
+          }
+        });
     },
   },
 };
