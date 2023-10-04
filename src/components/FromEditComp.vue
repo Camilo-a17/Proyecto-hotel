@@ -89,7 +89,6 @@ export default {
         nit: "",
         direccion: "",
         habitaciones: 0,
-        // Agrega los otros campos aquí y llénalos con los datos del hotel a editar
       }
     }
   },

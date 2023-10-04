@@ -60,8 +60,7 @@ export default {
     return {
       habitacion: {
         numero: '',
-        tipo: '' // Puedes definir las opciones en data o cargarlas desde una API
-        // Otros campos relacionados con la habitación
+        tipo: '' 
       }
     }
   },
