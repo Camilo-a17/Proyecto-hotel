@@ -4,6 +4,9 @@ import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 import VueSweetalert2 from 'vue-sweetalert2';
+import { Chart, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,ArcElement } from 'chart.js';
+Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,ArcElement);
+
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';

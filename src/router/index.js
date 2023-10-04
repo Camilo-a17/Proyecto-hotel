@@ -62,14 +62,17 @@ const router = createRouter({
       name: 'edit-habitacion',
       component: () => import('../views/EditHabitacion.vue')
     },
+    
+    {
+      path: '/reportes',
+      name: 'reportes',
+      component: () => import('../views/RportesVista.vue')
+    },
     {
       path: '/crear',
       name: 'crear',
       component: () => import('../views/CrearHabitacion.vue')
-    }
-   
-   
-    
+    } 
   ]
 })
 
