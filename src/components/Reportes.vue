@@ -17,7 +17,7 @@
         <!-- Gráfico de acomodaciones por acomodación -->
         <div class="w-full max-w-lg mx-auto mt-8 bg-white shadow-lg rounded-sm border border-gray-200">
           <header class="px-5 py-4 border-b border-gray-100">
-            <h2 class="font-semibold text-gray-800">Acomodaciones por Acomodación</h2>
+            <h2 class="font-semibold text-gray-800">Habitaciones por Acomodación</h2>
           </header>
           <div class="p-3">
             <pie-chart
