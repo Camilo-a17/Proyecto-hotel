@@ -17,10 +17,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faEye, faPenToSquare, faSquare, faSquareH, faTrash, faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faPenToSquare, faSquare, faSquareH, faTrash, faUserSecret, faLock } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faUserSecret, faEye, faPenToSquare, faTrash, faSquareH, faSquare)
+library.add(faUserSecret, faEye, faPenToSquare, faTrash, faSquareH, faSquare, faLock)
 const options = {
     confirmButtonColor: '#41b882',
     cancelButtonColor: '#ff7674',

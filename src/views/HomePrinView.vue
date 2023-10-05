@@ -6,8 +6,8 @@ import HInfoComp from '../components/HInfoComp.vue';
 
 </script>
 <template>
-  <NavComp />
-  <HInfoComp />
+  <NavComp /> 
   <HomeComp /> 
+  <HInfoComp />
   <FootComp />
 </template>

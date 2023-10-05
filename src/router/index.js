@@ -11,6 +11,14 @@ const router = createRouter({
       component: HomePrinView
     },
     {
+      path: '/inicio',
+      name: 'inicio',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/DashboardView.vue')
+    },
+    {
       path: '/prin',
       name: 'principal',
       // route level code-splitting
