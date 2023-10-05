@@ -1,3 +1,12 @@
+<script setup>
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
+})
+</script>
 <template>
     <div>
         
@@ -27,7 +36,7 @@
             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
               <div class="px-4 py-3" role="none">
                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Moises
+                  MoisesB
                 </p>
                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
                   moises@gmail.com
