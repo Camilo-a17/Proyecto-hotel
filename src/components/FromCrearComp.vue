@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-9 flex justify-center items-center h-screen">
+  <div class="mt-1 flex justify-center items-center h-screen">
     <div class="bg-white shadow-lg rounded-lg p-10 w-full max-w-md">
       <h1 class="text-3xl font-semibold mb-3">Crear Hotel</h1>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="mt-4">
-        <a href="/">
+        <a href="/list">
           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Guardar Cambios
           </button>
