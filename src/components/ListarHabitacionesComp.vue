@@ -4,17 +4,15 @@
       <!-- Table -->
       <div class="bg-white shadow-lg rounded-sm border border-gray-200">
         <header class="px-5 py-4 border-b border-gray-100">
-          <h2 class="font-semibold text-gray-800">Habitaciones</h2>
+          <p><font class="font-bold text-gray-800" size="5">Habitaciones</font></p>
         </header>
         <div class="p-3">
           <!-- Select input for choosing the hotel -->
           <div class="flex items-center mb-4">
-            <label for="hotelSelect" class="mr-2 font-semibold">Seleccionar Hotel:</label>
-            <select v-model="selectedHotel" id="hotelSelect" class="border p-1 rounded">
-              <option value="">Todos</option>
-              <option value="Guadalupe">Guadalupe</option>
-              <option value="FOREMAN">FOREMAN</option>
-              <option value="HOTEL AVENIDA">HOTEL AVENIDA</option>
+            <label for="habitSelect" class="mr-2 font-semibold">Seleccionar Habitaciones:</label>
+            <select v-model="selectedHabit" id="habitSelect" class="border p-1 rounded">
+              <option value="">Todas</option>
+              <option value="Disponible">Disponibles</option>
               <!-- Add more options for other hotels if needed -->
             </select>
           </div>
@@ -22,12 +20,6 @@
             <table class="table-auto w-full">
               <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                 <tr>
-                  <th class="p-2 whitespace-nowrap">
-                    <div class="font-semibold text-left">Hotel</div>
-                  </th>
-                  <th class="p-2 whitespace-nowrap">
-                    <div class="font-semibold text-left"># Habitaciones</div>
-                  </th>
                   <th class="p-2 whitespace-nowrap">
                     <div class="font-semibold text-left">Número</div>
                   </th>
@@ -41,18 +33,12 @@
                     <div class="font-semibold text-left">Disponibilidad</div>
                   </th>
                   <th class="p-2 whitespace-nowrap">
-                    <div class="font-semibold text-center">Acción</div>
+                    <div class="font-semibold text-left">Acción</div>
                   </th>
                 </tr>
               </thead>
               <tbody class="text-sm divide-y divide-gray-100">
                 <tr v-for="(item, index) in filteredTableData" :key="index">
-                  <td class="p-2 whitespace-nowrap">
-                    <div class="font-medium text-gray-800">{{ item.hotel }}</div>
-                  </td>
-                  <td class="p-2 whitespace-nowrap">
-                    <div class="font-medium text-gray-800">{{ item.habitaciones }}</div>
-                  </td>
                   <td class="p-2 whitespace-nowrap">
                     <div class="font-medium text-gray-800">{{ item.numero }}</div>
                   </td>
@@ -110,35 +96,27 @@ export default {
   name: 'SweetAlert2',
   data() {
     return {
-      selectedHotel: '',
+      selectedHabit: '',
       tableData: [
         {
-          hotel: 'Guadalupe',
-          habitaciones: '200',
           numero: '101',
           tipo: 'Individual',
           precio: '$100',
           disponibilidad: 'Disponible'
         },
         {
-          hotel: 'Guadalupe',
-          habitaciones: '200',
           numero: '102',
           tipo: 'Doble',
           precio: '$150',
           disponibilidad: 'No Disponible'
         },
         {
-          hotel: 'FOREMAN',
-          habitaciones: '150',
           numero: '103',
           tipo: 'Suite',
           precio: '$200',
           disponibilidad: 'Disponible'
         },
         {
-          hotel: 'HOTEL AVENIDA',
-          habitaciones: '180',
           numero: '104',
           tipo: 'Individual',
           precio: '$120',
@@ -152,18 +130,27 @@ export default {
   computed: {
     filteredTableData() {
       return this.tableData.filter((item) => {
-        return this.selectedHotel === '' || item.hotel === this.selectedHotel
+        return this.selectedHabit === '' || item.disponibilidad === this.selectedHabit
       })
     }
   },
   methods: {
     showAlert() {
-      // ... (existing showAlert method) ...
+      this.$swal({title: 'Cuidado!!',
+        text: "¿Desea eliminar esta Habitación?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+          if(result.value) {
+            this.$swal('Enhorabuena', 'Eliminada con exito', 'success')
+          }
+        });
     },
-    filterTable() {
-      // ... (existing filterTable method) ...
-    }
-  }
+  },
 }
 </script>
 
