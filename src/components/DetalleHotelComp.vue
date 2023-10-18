@@ -1,6 +1,5 @@
 <template>
-    <p class="text-5xl text-gray-900 dark:text-white text-center m-2 p-2">Hotel Emperador</p>
-  <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-3 "> 
+<div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-3 "> 
     
 <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
    <a href="#">

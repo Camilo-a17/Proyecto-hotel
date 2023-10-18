@@ -7,9 +7,9 @@ import ListarHabitacionesCompVue from '../components/ListarHabitacionesComp.vue'
 </script>
 
 <template>
-  
+<ListarHabitacionesCompVue />  
 <DetalleHotelComp />
-<ListarHabitacionesCompVue />
+
 
   
 </template>
