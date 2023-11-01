@@ -1,3 +1,8 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+</script>
 <template>
   <div class="mt-9 p-10">
     <div class="flex flex-col justify-center">

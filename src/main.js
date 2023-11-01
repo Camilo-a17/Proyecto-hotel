@@ -16,6 +16,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import axios from "axios";
+
+axios.defaults.baseURL = "http://146.190.32.176/diplomado/api/"
+
 /* import specific icons */
 import { faEye, faPenToSquare, faSquare, faSquareH, faTrash, faUserSecret, faLock } from '@fortawesome/free-solid-svg-icons'
 

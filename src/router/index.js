@@ -27,10 +27,10 @@ const router = createRouter({
           component: () => import('../views/AboutView.vue')
         },
         {
-          path: '/edit',
-          name: 'editar',
+          path: '/editarHotel/:hotelId',
+          name: 'editarHotel',
           component: () => import('../views/HotelesView.vue')
-        },
+        },        
         {
           path: '/detalle',
           name: 'hoteles',
