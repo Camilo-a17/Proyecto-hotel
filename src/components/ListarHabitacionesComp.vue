@@ -1,10 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
-
+import { ref, onMounted } from "vue";
+import axios from "axios";
 </script>
 <template>
-  
   <div class="mt-9 p-10">
     <div class="flex flex-col justify-center">
       <!-- Table -->
@@ -15,7 +13,9 @@ import axios from 'axios'
         <div class="p-3">
           <!-- Select input for choosing the hotel -->
           <div class="flex items-center mb-4">
-            <label for="habitSelect" class="mr-2 font-semibold">Seleccionar Habitaciones:</label>
+            <label for="habitSelect" class="mr-2 font-semibold"
+              >Seleccionar Habitaciones:</label
+            >
             <select v-model="selectedHabit" id="habitSelect" class="border p-1 rounded">
               <option value="">Todas</option>
               <option value="Individual">Individual</option>
@@ -47,22 +47,24 @@ import axios from 'axios'
                 </tr>
               </thead>
               <tbody class="text-sm divide-y divide-gray-100">
-                <tr v-for="(item, index) in filteredTableData" :key="index">
+                <tr
+                  v-for="fila in datos"
+                  :key="fila.id"
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
                   <td class="p-2 whitespace-nowrap">
-                    <div class="font-medium text-gray-800">{{ item.numero }}</div>
+                    <div class="font-medium text-gray-800">{{ fila.type.id }}</div>
                   </td>
                   <td class="p-2 whitespace-nowrap">
-                    {{ item.tipo }}
+                    {{ fila.type.name }}
                   </td>
                   <td class="p-2 whitespace-nowrap">
-                    {{ item.precio }}
+                    {{ fila.precio }}
                   </td>
                   <td class="p-2 whitespace-nowrap">
                     <span
-                      :class="
-                        item.disponibilidad === 'Disponible' ? 'text-green-500' : 'text-red-500'
-                      "
-                      >{{ item.disponibilidad }}</span
+                      :class="fila.success === 'true' ? 'text-green-500' : 'text-red-500'"
+                      >{{ fila.success }}</span
                     >
                   </td>
                   <td class="p-2 whitespace-nowrap">
@@ -73,12 +75,15 @@ import axios from 'axios'
                       <font-awesome-icon icon="fa-solid fa-eye" />
                     </a>
                     <a
-                      href="/edit-habitacion"
+                      :href="'/editarHotel/' + fila.id"
                       class="font-medium text-blue-600 hover:underline ml-2"
                     >
                       <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                     </a>
-                    <a @click="showAlert" class="font-medium text-red-600 hover:underline ml-2">
+                    <a
+                      @click="showAlert(fila.id)"
+                      class="font-medium text-red-600 hover:underline ml-2"
+                    >
                       <font-awesome-icon icon="fa-solid fa-trash" />
                     </a>
                   </td>
@@ -101,66 +106,81 @@ import axios from 'axios'
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: 'SweetAlert2',
+  name: "ListarHabitacionesComp",
   data() {
     return {
-      selectedHabit: '',
-      tableData: [
-        {
-          numero: '101',
-          tipo: 'Individual',
-          precio: '$100',
-          disponibilidad: 'Disponible'
-        },
-        {
-          numero: '102',
-          tipo: 'Doble',
-          precio: '$150',
-          disponibilidad: 'No Disponible'
-        },
-        {
-          numero: '103',
-          tipo: 'Suite',
-          precio: '$200',
-          disponibilidad: 'Disponible'
-        },
-        {
-          numero: '104',
-          tipo: 'Individual',
-          precio: '$120',
-          disponibilidad: 'Disponible'
-        }
-        // ... Add more data entries as needed ...
-      ]
-    }
+      selectedHabitation: "",
+      datos: [], // Inicializa la variable de datos como un arreglo vacío
+    };
   },
 
   computed: {
     filteredTableData() {
-      return this.tableData.filter((item) => {
-        return this.selectedHabit === '' || item.tipo === this.selectedHabit
-      })
-    }
-  },
-  methods: {
-    showAlert() {
-      this.$swal({title: 'Cuidado!!',
-        text: "¿Desea eliminar esta Habitación?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-          if(result.value) {
-            this.$swal('Enhorabuena', 'Eliminada con exito', 'success')
-          }
-        });
+      return this.datos.filter((item) => {
+        return (
+          this.selectedHabitation === "" ||
+          item.type === this.selectedHabitation ||
+          item.accommodation === this.selectedHabitation
+        );
+      });
     },
   },
-}
+
+  methods: {
+    cargarDatos: async function () {
+      try {
+        const response = await axios.get("rooms/11");
+        this.datos = response.data.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    showAlert: function (id) {
+      this.$swal({
+        title: "¿Está seguro?",
+        text: "¿Está seguro de que desea eliminar este hotel?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.value) {
+          this.eliminarHotel(id);
+        }
+      });
+    },
+
+    eliminarHotel: async function (id) {
+      try {
+        const response = await axios.delete(`rooms/11/${id}`);
+        if (response.status === 200) {
+          this.$swal("¡Enhorabuena!", "Habitacion eliminada con éxito", "success");
+          // Encuentra el índice del hotel en el arreglo
+          const index = this.datos.findIndex((type) => type.id === id);
+          if (index !== -1) {
+            // Elimina el hotel del arreglo datoss
+            this.datos.splice(index, 1);
+          }
+        } else {
+          this.$swal("Error", "Algo salió mal", "error");
+        }
+      } catch (error) {
+        console.error(error);
+        this.$swal("Error", "Hubo un error al eliminar la habitacion", "error");
+      }
+    },
+  },
+
+  mounted: function () {
+    this.cargarDatos();
+  },
+};
 </script>
 
 <style scoped>

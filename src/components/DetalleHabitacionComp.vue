@@ -1,125 +1,101 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+const selectedAcomodation = ref("");
+const datos = ref([]); // Declarar datos como una referencia
+
+// Inicializar componentes basados en selectores de atributos de datos
+onMounted(() => {
+  cargarDatos();
+});
+
+const cargarDatos = async () => {
+  try {
+    const response = await axios.get("rooms/11");
+    datos.value = response.data.data; // Asignar datos.value con los datos correctos
+  } catch (error) {
+    console.error(error);
+  }
+};
+</script>
 <template>
-    <div class="flex items-center justify-center w-full h-full py-24 sm:py-8 px-4">
-      <div class="w-full relative flex items-center justify-center">
-        <button
-          aria-label="slide backward"
-          class="absolute z-30 left-0 ml-10 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer"
-          id="prev"
-          @click="prevSlide"
-        >
-          <svg
-            class="dark:text-gray-900"
-            width="8"
-            height="14"
-            viewBox="0 0 8 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7 1L1 7L7 13"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+   
+    <div v-for="fila in datos" :key="fila.id"
+      class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <a href="#"><img class="p-8 rounded-t-lg"
+          src="https://images.pexels.com/photos/1454806/pexels-photo-1454806.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="product image"> </a>
+      <div class="px-5 pb-5">
+        <a href="#">
+          <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            <p>acomodacion:</p>
+            {{ fila.type.name }}
+          </h5>
+        </a>
+        <div class="flex items-center mt-2.5 mb-5">
+          <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"     fill="currentColor" viewBox="0 0 22 20" >
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
           </svg>
-        </button>
-        <div class="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
-          <div
-            id="slider"
-            class="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700"
-            :style="{ transform: `translateX(${defaultTransform}px)` }"
+          <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"     fill="currentColor" viewBox="0 0 22 20" >
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+          </svg>
+          <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"     fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+          <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"      fill="currentColor" viewBox="0 0 22 20">
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+          </svg>
+          <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20" >
+            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+          </svg>
+          <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span
           >
-            <div
-              class="flex flex-shrink-0 relative w-full sm:w-auto transform transition-transform"
-              v-for="(slide, index) in slides"
-              :key="index"
-            >
-              <img :src="slide.image" :alt="slide.alt" class="object-cover object-center w-full" />
-              <div class="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6">
-                <h2 class="lg:text-xl leading-4 text-base lg:leading-5 text-white dark:text-gray-900">{{ slide.catalog }}</h2>
-                <div class="flex h-full items-end pb-6">
-                  <h3 class="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white dark:text-gray-900">{{ slide.title }}</h3>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-        <button
-          aria-label="slide forward"
-          class="absolute z-30 right-0 mr-10 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
-          id="next"
-          @click="nextSlide"
-        >
-          <svg
-            class="dark:text-gray-900"
-            width="8"
-            height="14"
-            viewBox="0 0 8 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L7 7L1 13"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
+        <div class="flex items-center justify-between">
+          
+          <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >Ver</a>
+        </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        defaultTransform: 0,
-        slides: [
-          {
-            image: "https://i.ibb.co/fDngH9G/carosel-1.png",
-            alt: "Catalog 1",
-            catalog: "Habitacion 1",
-            title: "Minimal Interior",
-          },
-          {
-            image: "https://i.ibb.co/DWrGxX6/carosel-2.png",
-            alt: "Catalog 2",
-            catalog: "Habitacion 2",
-            title: "Minimal Interior",
-          },
-          {
-            image: "https://i.ibb.co/tCfVky2/carosel-3.png",
-            alt: "Catalog 3",
-            catalog: "Habitacion 3",
-            title: "Minimal Interior",
-          },
-          {
-            image: "https://i.ibb.co/rFsGfr5/carosel-4.png",
-            alt: "Catalog 4",
-            catalog: "Habitacion 4",
-            title: "Minimal Interior",
-          },
-        ],
-      };
+  </div>
+</template>
+<script>
+import axios from "axios";
+
+export default {
+  name: "DetalleHotelComp",
+  data() {
+    return {
+      selectedAcomodation: "",
+      datos: [], // Inicializa la variable de datos como un arreglo vacío
+    };
+  },
+
+  computed: {
+    filteredTableData() {
+      return this.datos.filter((item) => {
+        return this.selectedAcomodation === "" || item.Type === this.selectedAcomodation;
+      });
     },
-    methods: {
-      prevSlide() {
-        if (this.defaultTransform < 0) {
-          this.defaultTransform += 398;
-        } else {
-          this.defaultTransform = (this.slides.length - 1) * -398;
-        }
-      },
-      nextSlide() {
-        if (Math.abs(this.defaultTransform) < (this.slides.length - 1) * 398) {
-          this.defaultTransform -= 398;
-        } else {
-          this.defaultTransform = 0;
-        }
-      },
+  },
+
+  methods: {
+    cargarDatos: async function () {
+      try {
+        const response = await axios.get("rooms/11");
+        this.datos = response.data.data;
+      } catch (error) {
+        console.error(error);
+      }
     },
-  };
-  </script>
+  },
+
+  mounted: function () {
+    this.cargarDatos();
+  },
+};
+</script>

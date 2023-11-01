@@ -1,23 +1,23 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from "vue";
+import axios from "axios";
 
-const selectedHotel = ref('')
-const datos = ref([]) // Declarar datos como una referencia
+const selectedHotel = ref("");
+const datos = ref([]); // Declarar datos como una referencia
 
 // Inicializar componentes basados en selectores de atributos de datos
 onMounted(() => {
-  cargarDatos()
-})
+  cargarDatos();
+});
 
 const cargarDatos = async () => {
   try {
-    const response = await axios.get('hotels')
-    datos.value = response.data.data // Asignar datos.value con los datos correctos
+    const response = await axios.get("hotels");
+    datos.value = response.data.data; // Asignar datos.value con los datos correctos
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 </script>
 
 <template>
@@ -34,6 +34,7 @@ const cargarDatos = async () => {
               <option value="">Todos</option>
               <option value="GUADALUPE">Guadalupe</option>
               <option value="EMPERADOR">Emperador</option>
+
               <option value="FOREMAN">Foreman</option>
               <option value="HOTEL AVENIDA">Hotel Avenida</option>
               <!-- Agrega más opciones para otros hoteles si es necesario -->
@@ -92,11 +93,11 @@ const cargarDatos = async () => {
                     </a>
 
                     <a
-    @click="showAlert(fila.id)"
-    class="font-medium text-red-600 hover:underline ml-2"
-  >
-    <i class="fas fa-trash"></i> Eliminar
-  </a>
+                      @click="showAlert(fila.id)"
+                      class="font-medium text-red-600 hover:underline ml-2"
+                    >
+                      <i class="fas fa-trash"></i> Eliminar
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -116,47 +117,46 @@ const cargarDatos = async () => {
   </div>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'ListarHotelesComp',
+  name: "ListarHotelesComp",
   data() {
     return {
-      selectedHotel: '',
-      datos: [] // Inicializa la variable de datos como un arreglo vacío
+      selectedHotel: "",
+      datos: [], // Inicializa la variable de datos como un arreglo vacío
     };
   },
 
   computed: {
     filteredTableData() {
       return this.datos.filter((item) => {
-        return this.selectedHotel === '' || item.hotel === this.selectedHotel;
+        return this.selectedHotel === "" || item.hotel === this.selectedHotel;
       });
-    }
+    },
   },
 
   methods: {
-    cargarDatos: async function() {
+    cargarDatos: async function () {
       try {
-        const response = await axios.get('hotels');
+        const response = await axios.get("hotels");
         this.datos = response.data.data;
       } catch (error) {
         console.error(error);
       }
     },
 
-    showAlert: function(id) {
+    showAlert: function (id) {
       this.$swal({
-        title: '¿Está seguro?',
-        text: '¿Está seguro de que desea eliminar este hotel?',
-        icon: 'warning',
+        title: "¿Está seguro?",
+        text: "¿Está seguro de que desea eliminar este hotel?",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'Cancelar'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.value) {
           this.eliminarHotel(id);
@@ -164,11 +164,11 @@ export default {
       });
     },
 
-    eliminarHotel: async function(id) {
+    eliminarHotel: async function (id) {
       try {
         const response = await axios.delete(`hotels/${id}`);
         if (response.status === 200) {
-          this.$swal('¡Enhorabuena!', 'Hotel eliminado con éxito', 'success');
+          this.$swal("¡Enhorabuena!", "Hotel eliminado con éxito", "success");
           // Encuentra el índice del hotel en el arreglo
           const index = this.datos.findIndex((hotel) => hotel.id === id);
           if (index !== -1) {
@@ -176,17 +176,17 @@ export default {
             this.datos.splice(index, 1);
           }
         } else {
-          this.$swal('Error', 'Algo salió mal', 'error');
+          this.$swal("Error", "Algo salió mal", "error");
         }
       } catch (error) {
         console.error(error);
-        this.$swal('Error', 'Hubo un error al eliminar el hotel', 'error');
+        this.$swal("Error", "Hubo un error al eliminar el hotel", "error");
       }
-    }
+    },
   },
 
-  mounted: function() {
+  mounted: function () {
     this.cargarDatos();
-  }
+  },
 };
 </script>
