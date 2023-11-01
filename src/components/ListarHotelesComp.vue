@@ -172,7 +172,7 @@ export default {
           // Encuentra el índice del hotel en el arreglo
           const index = this.datos.findIndex((hotel) => hotel.id === id);
           if (index !== -1) {
-            // Elimina el hotel del arreglo datos
+            // Elimina el hotel del arreglo datoss
             this.datos.splice(index, 1);
           }
         } else {
