@@ -1,5 +1,6 @@
 <template>
-  <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-3 "> 
+<div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   gap-3 "> 
+    
 <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
    <a href="#">
        <img class="p-8 rounded-t-lg" src="https://images.pexels.com/photos/1454806/pexels-photo-1454806.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="product image" />

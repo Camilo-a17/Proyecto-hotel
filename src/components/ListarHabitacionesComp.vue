@@ -4,6 +4,7 @@ import axios from 'axios'
 
 </script>
 <template>
+  
   <div class="mt-9 p-10">
     <div class="flex flex-col justify-center">
       <!-- Table -->
@@ -17,7 +18,10 @@ import axios from 'axios'
             <label for="habitSelect" class="mr-2 font-semibold">Seleccionar Habitaciones:</label>
             <select v-model="selectedHabit" id="habitSelect" class="border p-1 rounded">
               <option value="">Todas</option>
-              <option value="Disponible">Disponibles</option>
+              <option value="Individual">Individual</option>
+              <option value="Doble">Doble</option>
+              <option value="Junior">Junior</option>
+              <option value="Suite">Suite</option>
               <!-- Add more options for other hotels if needed -->
             </select>
           </div>
@@ -135,7 +139,7 @@ export default {
   computed: {
     filteredTableData() {
       return this.tableData.filter((item) => {
-        return this.selectedHabit === '' || item.disponibilidad === this.selectedHabit
+        return this.selectedHabit === '' || item.tipo === this.selectedHabit
       })
     }
   },
