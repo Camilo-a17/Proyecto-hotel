@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 </script>
 <template>
   <div class="mt-9 p-10">
@@ -10,21 +10,7 @@ import axios from "axios";
         <header class="px-5 py-4 border-b border-gray-100">
           <p><font class="font-bold text-gray-800" size="5">Habitaciones</font></p>
         </header>
-        <div class="p-3">
-          <!-- Select input for choosing the hotel -->
-          <div class="flex items-center mb-4">
-            <label for="habitSelect" class="mr-2 font-semibold"
-              >Seleccionar Habitaciones:</label
-            >
-            <select v-model="selectedHabit" id="habitSelect" class="border p-1 rounded">
-              <option value="">Todas</option>
-              <option value="Individual">Individual</option>
-              <option value="Doble">Doble</option>
-              <option value="Junior">Junior</option>
-              <option value="Suite">Suite</option>
-              <!-- Add more options for other hotels if needed -->
-            </select>
-          </div>
+        <div class="p-3">          
           <div class="overflow-x-auto">
             <table class="table-auto w-full">
               <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
@@ -36,10 +22,7 @@ import axios from "axios";
                     <div class="font-semibold text-left">Tipo</div>
                   </th>
                   <th class="p-2 whitespace-nowrap">
-                    <div class="font-semibold text-left">Precio</div>
-                  </th>
-                  <th class="p-2 whitespace-nowrap">
-                    <div class="font-semibold text-left">Disponibilidad</div>
+                    <div class="font-semibold text-left">Acomodacion</div>
                   </th>
                   <th class="p-2 whitespace-nowrap">
                     <div class="font-semibold text-left">Acción</div>
@@ -59,13 +42,7 @@ import axios from "axios";
                     {{ fila.type.name }}
                   </td>
                   <td class="p-2 whitespace-nowrap">
-                    {{ fila.precio }}
-                  </td>
-                  <td class="p-2 whitespace-nowrap">
-                    <span
-                      :class="fila.success === 'true' ? 'text-green-500' : 'text-red-500'"
-                      >{{ fila.success }}</span
-                    >
+                    {{ fila.accommodation.name }}
                   </td>
                   <td class="p-2 whitespace-nowrap">
                     <a
@@ -75,7 +52,7 @@ import axios from "axios";
                       <font-awesome-icon icon="fa-solid fa-eye" />
                     </a>
                     <a
-                      :href="'/editarHotel/' + fila.id"
+                      :href="'/edit-habitacion/' + fila.id"
                       class="font-medium text-blue-600 hover:underline ml-2"
                     >
                       <font-awesome-icon icon="fa-solid fa-pen-to-square" />
@@ -90,14 +67,27 @@ import axios from "axios";
                 </tr>
               </tbody>
             </table>
-            <a href="/crear"
-              ><button
-                type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 m-4 p-4"
-              >
-                Crear Habitacion
-              </button></a
+
+            <!-- Modal toggle -->
+            <button
+              data-modal-target="default-modal"
+              data-modal-toggle="default-modal"
+              class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              type="button"
             >
+              Toggle modal
+            </button>
+
+            <!-- Main modal -->
+            <div
+              id="default-modal"
+              tabindex="-1"
+              aria-hidden="true"
+              class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+            >
+                    <FormCrearHabitacion :idHotel="idHotel" />
+                  
+            </div>
           </div>
         </div>
       </div>
@@ -106,81 +96,89 @@ import axios from "axios";
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
+import FormCrearHabitacion from '../components/FormCrearHabitacion.vue';
 
 export default {
-  name: "ListarHabitacionesComp",
+  name: 'ListarHabitacionesComp',
+  props: {
+    idHotel: Number
+  },
+  components: {
+    FormCrearHabitacion
+  },
   data() {
     return {
-      selectedHabitation: "",
-      datos: [], // Inicializa la variable de datos como un arreglo vacío
-    };
+      selectedHabitation: '',
+      datos: [] // Inicializa la variable de datos como un arreglo vacío
+    }
   },
 
   computed: {
     filteredTableData() {
       return this.datos.filter((item) => {
         return (
-          this.selectedHabitation === "" ||
+          this.selectedHabitation === '' ||
           item.type === this.selectedHabitation ||
           item.accommodation === this.selectedHabitation
-        );
-      });
-    },
+        )
+      })
+    }
   },
 
   methods: {
     cargarDatos: async function () {
       try {
-        const response = await axios.get("rooms/11");
-        this.datos = response.data.data;
+        const response = await axios.get('rooms/' + this.idHotel)
+        this.datos = response.data.data
+        console.log(response.data.data)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     },
 
     showAlert: function (id) {
       this.$swal({
-        title: "¿Está seguro?",
-        text: "¿Está seguro de que desea eliminar este hotel?",
-        icon: "warning",
+        title: '¿Está seguro?',
+        text: '¿Está seguro de que desea eliminar este hotel?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sí",
-        cancelButtonText: "Cancelar",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.value) {
-          this.eliminarHotel(id);
+          this.eliminarHotel(id)
         }
-      });
+      })
     },
 
     eliminarHotel: async function (id) {
       try {
-        const response = await axios.delete(`rooms/11/${id}`);
+        const response = await axios.delete(`rooms/${id}`)
         if (response.status === 200) {
-          this.$swal("¡Enhorabuena!", "Habitacion eliminada con éxito", "success");
+          this.$swal('¡Enhorabuena!', 'Habitacion eliminada con éxito', 'success')
           // Encuentra el índice del hotel en el arreglo
-          const index = this.datos.findIndex((type) => type.id === id);
+          const index = this.datos.findIndex((type) => type.id === id)
           if (index !== -1) {
             // Elimina el hotel del arreglo datoss
-            this.datos.splice(index, 1);
+            this.datos.splice(index, 1)
           }
         } else {
-          this.$swal("Error", "Algo salió mal", "error");
+          this.$swal('Error', 'Algo salió mal', 'error')
         }
       } catch (error) {
-        console.error(error);
-        this.$swal("Error", "Hubo un error al eliminar la habitacion", "error");
+        console.error(error)
+        this.$swal('Error', 'Hubo un error al eliminar la habitacion', 'error')
       }
-    },
+    }
   },
 
   mounted: function () {
-    this.cargarDatos();
-  },
-};
+    this.cargarDatos()
+  }
+}
 </script>
 
 <style scoped>

@@ -1,88 +1,113 @@
 <template>
-  <div class="mt-9 flex justify-center items-center h-screen">
-    <div class="bg-white shadow-lg rounded-lg p-10 w-full max-w-md">
-      <h1 class="text-3xl font-semibold mb-3">Editar Habitación</h1>
-      <div class="relative z-0 w-full mb-5">
-        <input
-          type="text"
-          id="numero"
-          class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-          v-model="habitacion.numero"
-          required
-          @focus="isTypingNumero = true"
-          @blur="isTypingNumero = false"
-        />
-        <label v-if="!isTypingNumero" for="numero" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Número de Habitación:</label>
-        <span v-if="!habitacion.numero && !isTypingNumero" class="text-sm text-red-600">Este campo es requerido</span>
+  <div>
+    <div class="grid grid-cols-2 my-6 text-gray-700">
+      <div class="flex items-center">
+        <BuildingOfficeIcon class="w-10" />
+        <h2 class="mb-1 text-4xl font-bold dark:text-white">Actualizar Habitacion</h2>
       </div>
-
-      <div class="relative z-0 w-full mb-5">
-        <select
-          id="tipo"
-          class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-          v-model="habitacion.tipo"
-          required
-          @focus="isTypingTipo = true"
-          @blur="isTypingTipo = false"
-        >
-          <option value="" disabled hidden>Selecciona un tipo</option>
-          <option value="estandar">Estándar</option>
-          <option value="junior">Junior</option>
-          <option value="suite">Suite</option>
-        </select>
-        <label v-if="!isTypingTipo" for="tipo" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"></label>
-        <span v-if="!habitacion.tipo && !isTypingTipo" class="text-sm text-red-600">Selecciona un tipo de habitación</span>
-      </div>
-
-      <div class="relative z-0 w-full mb-5">
-        <select
-          id="acomodacion"
-          class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-          v-model="habitacion.acomodacion"
-          required
-          @focus="isTypingAcomodacion = true"
-          @blur="isTypingAcomodacion = false"
-        >
-          <option value="" disabled hidden>Selecciona una acomodación</option>
-          <option value="sencilla">Sencilla</option>
-          <option value="doble">Doble</option>
-          <option value="triple">Triple</option>
-          <option value="cuadruple">Cuádruple</option>
-        </select>
-        <label v-if="!isTypingAcomodacion" for="acomodacion" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500"></label>
-        <span v-if="!habitacion.acomodacion && !isTypingAcomodacion" class="text-sm text-red-600">Selecciona una acomodación</span>
-      </div>
-
-      <!-- Otros campos relacionados con la habitación -->
-
-      <div class="mt-4">
-        <a href="/habitaciones">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Guardar Cambios
-          </button>
-        </a>
+      <div class="flex justify-end">
+        <!-- Puedes agregar botones adicionales si es necesario -->
       </div>
     </div>
-  </div>
-</template>
+
+    <div class="mb-6">
+      <div>
+        <label for="nume" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero</label>
+        <input v-model="formulario.numero" type="number" id="nume"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Ingrese el numero del hotel">
+        <div v-if="errores.numero" class="p-2 mt-1 rounded-lg bg-red-50 border border-red-500">{{ errores.numero[0] }}</div>
+      </div>
+      <label for="habitaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
+      <select v-model="formulario.name" id="habitaciones"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected>Seleccione un Tipo...</option>
+        <option v-for="habi in habitaciones" :value="habi.id" :key="habi.id">{{ habi.tipo}}</option>
+      </select>
+      <div v-if="errores.tipo" class="p-2 mt-1 rounded-lg bg-red-50 border border-red-500">{{ errores.tipo[0] }}</div>
+    </div>
+
+    
+    <label for="habitaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Acomodacion</label>
+      <select v-model="formulario.city_id" id="habitaciones"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected>Seleccione una ciudad...</option>
+        <option v-for="habi in habitaciones" :value="habi.id" :key="habi.id">{{ habi.name }}</option>
+      </select>
+      <div v-if="errores.city_id" class="p-2 mt-1 rounded-lg bg-red-50 border border-red-500">{{ errores.city_id[0] }}</div>
+    </div>
+
+      <div class="m-2 mt-3 w-52 items-center">
+        <button @click="actualizarHotel"
+      class="text-white bg-blue-700 hover-bg-blue-800 focus-ring-4 focus-outline-none focus-ring-blue-300 font-medium rounded-lg text-sm w-full sm-w-auto px-5 py-2.5 text-center dark-bg-blue-600 dark-hover-bg-blue-700 dark-focus-ring-blue-800">Actualizar
+      hotel</button>
+      </div>
+  
+</template>>
 
 <script>
 export default {
   data() {
     return {
-      habitacion: {
-        numero: "",
-        tipo: "",
-        acomodacion: "", // Agregamos el campo de acomodación
-        // Otros campos relacionados con la habitación
-      },
-    };
+      errores: {},
+      habitaciones: [], // Lista de ciudades
+      formulario: {
+        
+                  }
+    }
   },
   methods: {
-    guardarCambios() {
-      // Envía los datos editados de la habitación al backend para su actualización
-      // Luego, redirige a la lista de habitaciones
-    },
+    actualizarHotel() {
+      const habitacionId=this.$route.params.habitacionId
+      axios.put(`rooms/show/${habitacionId}`, this.formulario) // Reemplaza "hotelId" con el ID del hotel a actualizar
+        .then((response) => {
+          this.$swal({
+        title: "ok",
+        text: "actualizado con exito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí"        
+      }).then((result) => {
+        if (result.value) {
+          this.$router.push('/list')
+        }
+      })
+          // Actualización exitosa
+          // Redireccionar a "/list"
+        })
+        .catch(error => {
+          if (error.response.status === 422) {
+            if (error.response.data.errors) {
+              this.errores = error.response.data.errors;
+            }
+          } else {
+            // Otro tipo de errorpp
+            console.error(error);
+          }
+        })
+    }
   },
+  mounted() {
+    // Aquí debes cargar los datos del hotel que deseas editar utilizando su ID y llenar el formulario
+    const habitacionId = this.$route.params.habitacionId
+    axios.get('rooms/show/'+ habitacionId)
+      .then((response) => {
+        this.formulario = response.data.data; // Llenar el formulario con los datos del hotel
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    // A continuación, cargamos la lista de ciudades
+    axios.get('rooms')
+      .then(response => {
+        this.ciudades = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 };
 </script>

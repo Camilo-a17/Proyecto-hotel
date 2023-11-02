@@ -21,6 +21,7 @@
     </div>
 
     <div class="grid gap-6 mb-6 md:grid-cols-2">
+      
       <div>
         <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
         <input v-model="formulario.name" type="text" id="nombre"
@@ -54,7 +55,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+
 import axios from 'axios'
 export default {
   data() {
@@ -62,21 +63,30 @@ export default {
       errores: {},
       ciudades: [], // Lista de ciudades
       formulario: {
-        city_id: null,
-        name: null,
-        nit: null,
-        address: null,
-        num_rooms: null
-      },
-    };
+        
+                  }
+    }
   },
   methods: {
     actualizarHotel() {
-      // Aquí debes implementar la lógica para actualizar el hotel
+      const hotelId=this.$route.params.hotelId
       axios.put(`hotels/${hotelId}`, this.formulario) // Reemplaza "hotelId" con el ID del hotel a actualizar
-        .then(response => {
+        .then((response) => {
+          this.$swal({
+        title: "ok",
+        text: "actualizado con exito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí"        
+      }).then((result) => {
+        if (result.value) {
+          this.$router.push('/list')
+        }
+      })
           // Actualización exitosa
-          this.$router.push('/list'); // Redireccionar a "/list"
+          // Redireccionar a "/list"
         })
         .catch(error => {
           if (error.response.status === 422) {
@@ -84,18 +94,18 @@ export default {
               this.errores = error.response.data.errors;
             }
           } else {
-            // Otro tipo de error
+            // Otro tipo de errorpp
             console.error(error);
           }
-        });
+        })
     }
   },
   mounted() {
     // Aquí debes cargar los datos del hotel que deseas editar utilizando su ID y llenar el formulario
-    const hotelId = hotelId;
-    axios.get(`hotels/${hotelId}`)
-      .then(response => {
-        this.formulario = response.data; // Llenar el formulario con los datos del hotel
+    const hotelId = this.$route.params.hotelId
+    axios.get('hotels/'+hotelId)
+      .then((response) => {
+        this.formulario = response.data.data; // Llenar el formulario con los datos del hotel
       })
       .catch(error => {
         console.log(error);

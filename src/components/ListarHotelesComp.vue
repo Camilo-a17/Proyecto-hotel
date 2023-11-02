@@ -28,18 +28,7 @@ const cargarDatos = async () => {
           <p class="font-bold text-gray-800 text-5xl">Hoteles</p>
         </header>
         <div class="p-3">
-          <div class="flex items-center mb-4">
-            <label for="habitSelect" class="mr-2 font-semibold">Seleccionar Hotel:</label>
-            <select v-model="selectedHotel" id="habitSelect" class="border p-1 rounded">
-              <option value="">Todos</option>
-              <option value="GUADALUPE">Guadalupe</option>
-              <option value="EMPERADOR">Emperador</option>
-
-              <option value="FOREMAN">Foreman</option>
-              <option value="HOTEL AVENIDA">Hotel Avenida</option>
-              <!-- Agrega más opciones para otros hoteles si es necesario -->
-            </select>
-          </div>
+          
           <div class="overflow-x-auto">
             <table class="table-auto w-full">
               <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
@@ -80,23 +69,23 @@ const cargarDatos = async () => {
                     <div class="font-medium text-gray-800">{{ fila.address }}</div>
                   </td>
                   <td class="p-2 whitespace-nowrap">
-                    <a href="/detalle" class="font-medium text-blue-600 hover:underline">
-                      <i class="fas fa-eye"></i>
+                    <a :href="'/detalle/'+ fila.id" class="font-medium text-blue-600 hover:underline">
+                     
                       <font-awesome-icon icon="fa-solid fa-eye" />
                     </a>
                     <a
                       :href="'/editarHotel/' + fila.id"
                       class="font-medium text-blue-600 hover:underline ml-2"
                     >
-                      <i class="fas fa-edit"></i>
+                      
                       <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                     </a>
 
                     <a
                       @click="showAlert(fila.id)"
-                      class="font-medium text-red-600 hover:underline ml-2"
+                      class="font-medium text-red-600 hover:underline ml-2 cursor-pointer"
                     >
-                      <i class="fas fa-trash"></i> Eliminar
+                    <font-awesome-icon icon="fa-solid fa-trash" />
                     </a>
                   </td>
                 </tr>
@@ -125,7 +114,8 @@ export default {
   data() {
     return {
       selectedHotel: "",
-      datos: [], // Inicializa la variable de datos como un arreglo vacío
+      datos: [], 
+      restriccion:''
     };
   },
 
@@ -146,25 +136,23 @@ export default {
         console.error(error);
       }
     },
-
-    showAlert: function (id) {
+    showAlert: function(id){
       this.$swal({
-        title: "¿Está seguro?",
-        text: "¿Está seguro de que desea eliminar este hotel?",
+        title: "¿esta seguro?",
+        text: "¿esta seguro que quiere eliminar este hotel?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Sí",
-        cancelButtonText: "Cancelar",
+        confirmButtonText: "Sí" ,
+        cancelButtonText: "Cancelar",       
       }).then((result) => {
         if (result.value) {
-          this.eliminarHotel(id);
+          this.eliminarHotel(id)
         }
       });
     },
-
-    eliminarHotel: async function (id) {
+    eliminarHotel: async function (id){
       try {
         const response = await axios.delete(`hotels/${id}`);
         if (response.status === 200) {
@@ -179,11 +167,11 @@ export default {
           this.$swal("Error", "Algo salió mal", "error");
         }
       } catch (error) {
-        console.error(error);
-        this.$swal("Error", "Hubo un error al eliminar el hotel", "error");
+        this.restriccion = error.response.data
+        this.$swal("Error", this.restriccion.message, "error");
       }
     },
-  },
+  },     
 
   mounted: function () {
     this.cargarDatos();

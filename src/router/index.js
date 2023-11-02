@@ -32,7 +32,7 @@ const router = createRouter({
           component: () => import('../views/HotelesView.vue')
         },        
         {
-          path: '/detalle',
+          path: '/detalle/:hotelId',
           name: 'hoteles',
           component: () => import('../views/DetalleHotelView.vue')
         },
@@ -47,7 +47,7 @@ const router = createRouter({
           component: () => import('../views/DetalleHabitacionView.vue')
         },
         {
-          path: '/edit-habitacion',
+          path: '/edit-habitacion/:habitacionId',
           name: 'edit-habitacion',
           component: () => import('../views/EditHabitacion.vue')
         },
