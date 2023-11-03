@@ -26,17 +26,19 @@
           {{ errores.quantity[0] }}
         </div>
       </div>
-      <label for="habitaciones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      <label
+        for="tipos_habitaciones"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >Tipo</label
       >
-      <select 
-        v-model="formulario.type" required
-        id="habitaciones"
+      <select
+        v-model="formulario.room_type_id"
+        id="tipos_habitaciones"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
-        <option selected :value="room_type_id.id">{{ room_type_id.name }}</option>
-        <option v-for="tipo in  tipos_habitaciones " :value="tipo.id" :key="tipo.id">{{ tipo.name }}</option>
-        
+        <option v-for="tipo in tipos_habitaciones" :value="tipo.id" :key="tipo.id">
+          {{ tipo.name }}
+        </option>
       </select>
       <div v-if="errores.tipo" class="p-2 mt-1 rounded-lg bg-red-50 border border-red-500">
         {{ errores.tipo[0] }}
@@ -47,12 +49,13 @@
       >Acomodacion</label
     >
     <select
-      v-model="formulario.city_id"
+      v-model="formulario.accommodation_id"
       id="habitaciones"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
     >
-      <option selected>Seleccione una Acomodacion...</option>
-      <option v-for="habi in habitaciones" :value="habi.id" :key="habi.id">{{ habi.name }}</option>
+      <option v-for="tipo in tipos_acomodaciones" :value="tipo.id" :key="tipo.id">
+        {{ tipo.name }}
+      </option>
     </select>
     <div v-if="errores.city_id" class="p-2 mt-1 rounded-lg bg-red-50 border border-red-500">
       {{ errores.city_id[0] }}
@@ -76,11 +79,9 @@ export default {
   data() {
     return {
       errores: {},
-      tipos_habitaciones: [], 
-      formulario: {
-      },
-      accomodation_id: {},
-      room_type_id: {}
+      tipos_habitaciones: [],
+      tipos_acomodaciones: [],
+      formulario: []
     }
   },
   methods: {
@@ -124,20 +125,25 @@ export default {
       .get('rooms/show/' + habitacionId)
       .then((response) => {
         this.formulario = response.data.data
-        this.room_type_id = this.formulario.type
-        console.log(this.formulario.type) // Llenar el formulario con los datos del hotel
+        console.log(this.formulario) // Llenar el formulario con los datos del hotel
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
-        axios
-          .get('room-types')
-          .then((response) => {
-            this.tipos_habitaciones = response.data.filter(
-              (habitacion) => habitacion.id != this.room_type_id.id
-            )
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+    axios
+      .get('room-types')
+      .then((response) => {
+        this.tipos_habitaciones = response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
+      axios
+      .get('accommodation-types')
+      .then((response) => {
+        this.tipos_acomodaciones = response.data
       })
       .catch((error) => {
         console.log(error)
