@@ -73,13 +73,10 @@ export default {
       axios.put(`hotels/${hotelId}`, this.formulario) // Reemplaza "hotelId" con el ID del hotel a actualizar
         .then((response) => {
           this.$swal({
-        title: "ok",
-        text: "actualizado con exito",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sí"        
+            title: "Éxito",
+          text: "El hotel se ha actualizado con éxito",
+          icon: "success",
+          confirmButtonText: "Aceptar"        
       }).then((result) => {
         if (result.value) {
           this.$router.push('/list')
