@@ -42,7 +42,7 @@ const router = createRouter({
           component: () => import('../views/ListarHabitacionesView.vue')
         },
         {
-          path: '/detalle-habitaciones',
+          path: '/detalle-habitaciones/:idHabitacion',
           name: 'detalle-habitaciones',
           component: () => import('../views/DetalleHabitacionView.vue')
         },

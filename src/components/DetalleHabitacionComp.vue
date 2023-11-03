@@ -1,28 +1,7 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
-
-const selectedAcomodation = ref("");
-const datos = ref([]); // Declarar datos como una referencia
-
-// Inicializar componentes basados en selectores de atributos de datos
-onMounted(() => {
-  cargarDatos();
-});
-
-const cargarDatos = async () => {
-  try {
-    const response = await axios.get("rooms/11");
-    datos.value = response.data.data; // Asignar datos.value con los datos correctos
-  } catch (error) {
-    console.error(error);
-  }
-};
-</script>
 <template>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
    
-    <div v-for="fila in datos" :key="fila.id"
+    <div
       class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
       <a href="#"><img class="p-8 rounded-t-lg"
@@ -31,9 +10,14 @@ const cargarDatos = async () => {
       <div class="px-5 pb-5">
         <a href="#">
           <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            <p>acomodacion:</p>
-            {{ fila.type.name }}
+            <p># Habitacion:</p>
+              {{ datos.id }}
+              <p>Tipo:</p>
+              {{ type.name }}
+              <p>Acomodacion:</p>
+              {{ acommodation.name }}
           </h5>
+          
         </a>
         <div class="flex items-center mt-2.5 mb-5">
           <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"     fill="currentColor" viewBox="0 0 22 20" >
@@ -53,11 +37,13 @@ const cargarDatos = async () => {
           </svg>
           <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span
           >
+          
         </div>
+        
         <div class="flex items-center justify-between">
           
-          <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >Ver</a>
+          <a :href="`/detalle/${datos.hotel_id}`" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >Volver</a>
         </div>
       </div>
     </div>
@@ -67,34 +53,35 @@ const cargarDatos = async () => {
 import axios from "axios";
 
 export default {
-  name: "DetalleHotelComp",
+  name: "DetalleHabitacionComp",
   data() {
     return {
       selectedAcomodation: "",
-      datos: [], // Inicializa la variable de datos como un arreglo vacío
+      datos: [],
+      type: {},
+      acommodation: {} // Inicializa la variable de datos como un arreglo vacío
     };
-  },
-
-  computed: {
-    filteredTableData() {
-      return this.datos.filter((item) => {
-        return this.selectedAcomodation === "" || item.Type === this.selectedAcomodation;
-      });
-    },
   },
 
   methods: {
     cargarDatos: async function () {
       try {
-        const response = await axios.get("rooms/11");
+        const response = await axios.get("rooms/show/" + this.$route.params.idHabitacion);
+        console.log(response.data.data);
         this.datos = response.data.data;
+        this.type = this.datos.type
+        console.log(this.type);
+        this.acommodation = this.datos.accommodation
+        console.log(this.acommodation);
+        console.log(this.datos);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     },
   },
 
   mounted: function () {
+    console.log(this.$route.params.idHabitacion);
     this.cargarDatos();
   },
 };

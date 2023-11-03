@@ -36,7 +36,7 @@ import axios from 'axios'
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 >
                   <td class="p-2 whitespace-nowrap">
-                    <div class="font-medium text-gray-800">{{ fila.type.id }}</div>
+                    <div class="font-medium text-gray-800">{{ fila.id }}</div>
                   </td>
                   <td class="p-2 whitespace-nowrap">
                     {{ fila.type.name }}
@@ -46,7 +46,7 @@ import axios from 'axios'
                   </td>
                   <td class="p-2 whitespace-nowrap">
                     <a
-                      href="/detalle-habitaciones"
+                      :href="'/detalle-habitaciones/' + fila.id"
                       class="font-medium text-blue-600 hover:underline"
                     >
                       <font-awesome-icon icon="fa-solid fa-eye" />
@@ -75,7 +75,7 @@ import axios from 'axios'
               class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               type="button"
             >
-              Toggle modal
+              Crear Habitacion
             </button>
 
             <!-- Main modal -->
