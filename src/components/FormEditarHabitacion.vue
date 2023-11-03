@@ -64,7 +64,7 @@
 
   <div class="m-2 mt-3 w-52 items-center">
     <button
-      @click="actualizarHotel"
+      @click="actualizarHabitacion"
       class="text-white bg-blue-700 hover-bg-blue-800 focus-ring-4 focus-outline-none focus-ring-blue-300 font-medium rounded-lg text-sm w-full sm-w-auto px-5 py-2.5 text-center dark-bg-blue-600 dark-hover-bg-blue-700 dark-focus-ring-blue-800"
     >
       Actualizar
@@ -81,18 +81,19 @@ export default {
       errores: {},
       tipos_habitaciones: [],
       tipos_acomodaciones: [],
-      formulario: []
+      formulario: [],
+      restriccion:''
     }
   },
   methods: {
-    actualizarHotel() {
+    actualizarHabitacion() {
       const habitacionId = this.$route.params.habitacionId
       axios
         .put(`rooms/${habitacionId}`, this.formulario) // Reemplaza "hotelId" con el ID del hotel a actualizar
         .then((response) => {
           this.$swal({
             title: 'ok',
-            text: 'actualizado con exito',
+            text: 'habitacion actualizada con exito',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -100,21 +101,15 @@ export default {
             confirmButtonText: 'Sí'
           }).then((result) => {
             if (result.value) {
-              this.$router.push('/list')
+              this.$router.push(`/detalle/${this.formulario.hotel_id}`)
             }
           })
           // Actualización exitosa
           // Redireccionar a "/list"
         })
         .catch((error) => {
-          if (error.response.status === 422) {
-            if (error.response.data.errors) {
-              this.errores = error.response.data.errors
-            }
-          } else {
-            // Otro tipo de errorpp
-            console.error(error)
-          }
+          this.restriccion = error.response.data
+        this.$swal("Error", this.restriccion.message, "error");
         })
     }
   },

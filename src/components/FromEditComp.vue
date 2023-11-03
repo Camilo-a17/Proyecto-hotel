@@ -60,6 +60,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      num_habitaciones: 0,
       errores: {},
       ciudades: [], // Lista de ciudades
       formulario: {
@@ -69,7 +70,15 @@ export default {
   },
   methods: {
     actualizarHotel() {
-      const hotelId=this.$route.params.hotelId
+      if (this.num_habitaciones > this.formulario.num_rooms) {
+        this.$swal({
+            title: "hops",
+          text: "El numero de habitacuiones colocadas es menos al numero de habitaciones ya creadas",
+          icon: "error",
+          confirmButtonText: "Aceptar"
+        })
+      } else {
+        const hotelId=this.$route.params.hotelId
       axios.put(`hotels/${hotelId}`, this.formulario) // Reemplaza "hotelId" con el ID del hotel a actualizar
         .then((response) => {
           this.$swal({
@@ -96,6 +105,8 @@ export default {
           }
         })
     }
+      }
+      
   },
   mounted() {
     // Aquí debes cargar los datos del hotel que deseas editar utilizando su ID y llenar el formulario
@@ -116,6 +127,15 @@ export default {
       .catch(error => {
         console.log(error);
       });
+
+      axios
+      .get('rooms/'+hotelId)
+      .then((response) => {
+        this.num_habitaciones = response.data.data.length
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 };
 </script>
