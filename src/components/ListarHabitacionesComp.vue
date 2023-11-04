@@ -140,7 +140,7 @@ export default {
     showAlert: function (id) {
       this.$swal({
         title: '¿Está seguro?',
-        text: '¿Está seguro de que desea eliminar este hotel?',
+        text: '¿Está seguro de que desea eliminar esta habitacion?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
